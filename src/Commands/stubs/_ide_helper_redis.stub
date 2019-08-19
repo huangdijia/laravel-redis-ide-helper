@@ -2,7 +2,8 @@
 // source version: https://github.com/JetBrains/phpstorm-stubs/blob/master/redis/Redis.phpdis/Redis.php
 // phpdoc version: https://github.com/nrk/predis/blob/v1.1/src/ClientInterface.php
 // save this file to your project root
-namespace {
+
+namespace Illuminate\Support\Facades {
     exit("This file should not be included, only analyzed by your IDE");
     /**
      * @method static int    del( array $keys )
@@ -153,7 +154,7 @@ namespace {
      * @method static array  georadius( $key, $longitude, $latitude, $radius, $unit, array $options = null )
      * @method static array  georadiusbymember( $key, $member, $radius, $unit, array $options = null )
      */
-    class Redis extends \Illuminate\Support\Facades\Redis
+    class Redis
     {
     }
 }
