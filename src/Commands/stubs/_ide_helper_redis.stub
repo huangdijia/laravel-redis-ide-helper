@@ -153,6 +153,9 @@ namespace Illuminate\Support\Facades {
      * @method static string geodist($key, $member1, $member2, $unit = null)
      * @method static array  georadius($key, $longitude, $latitude, $radius, $unit, array $options = null)
      * @method static array  georadiusbymember($key, $member, $radius, $unit, array $options = null)
+     * @method static \Illuminate\Redis\Connections\Connection|\Predis\Client connection(string $name = null)
+     * @method static \Illuminate\Redis\Connections\Connection resolve(string $name = null)
+     * @method static array connections()
      */
     class Redis
     {
