@@ -14,11 +14,14 @@
         "email": "huangdijia@gmail.com"
     }],
     "require": {
-        "php": ">=7.0.0",
-        "illuminate/support": "^5.7|^5.8|^6.0|^7.0|^8.0",
-        "illuminate/console": "^5.7|^5.8|^6.0|^7.0|^8.0"
+        "php": ">=8.0",
+        "illuminate/support": "^9.0",
+        "illuminate/console": "^9.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.0",
+        "orchestra/testbench": "^7.0",
+        "phpstan/phpstan": "^1.0",
         "predis/predis": "^1.1"
     },
     "autoload": {
@@ -33,5 +36,9 @@
                 "Huangdijia\\RedisIdeHelper\\RedisIdeHelperServiceProvider"
             ]
         }
+    },
+    "scripts": {
+        "cs-fix": "php-cs-fixer fix $1",
+        "analyse": "phpstan analyse --memory-limit 300M -l 0 -c phpstan.neon ./src"
     }
 }
