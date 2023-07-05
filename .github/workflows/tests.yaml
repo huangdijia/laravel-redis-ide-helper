@@ -4,25 +4,30 @@ on: [push, pull_request]
 
 jobs:
   ci:
-    name: Test on PHP ${{ matrix.php-version }}
+    name: Test on PHP ${{ matrix.php }} Laravel ${{ matrix.laravel }}
     runs-on: "${{ matrix.os }}"
     strategy:
       matrix:
         os: [ubuntu-latest]
-        php-version: ['8.0', '8.1']
-      max-parallel: 4
+        php: ['8.1', '8.2']
+        laravel: ['9', '10']
+      max-parallel: 32
     steps:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-version }}
-          extensions: redis, pdo, pdo_mysql, bcmath, swoole
+          php-version: ${{ matrix.php }}
+          extensions: redis, pdo, pdo_mysql, bcmath
           tools: phpize
           coverage: none
       - name: Setup Packages
-        run: composer update -o
+        run: |
+          composer require illuminate/console:^${{ matrix.laravel }}.0 --no-install --no-update
+          composer require illuminate/support:^${{ matrix.laravel }}.0 --no-install --no-update
+          composer require laravel/framework:^${{ matrix.laravel }}.0 --dev --no-install --no-update
+          composer update -o
       - name: Run Analyse
         run: |
           composer analyse src

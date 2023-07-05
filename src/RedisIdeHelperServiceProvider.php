@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 /**
- * This file is part of http-client.
+ * This file is part of laravel-redis-ide-helper.
  *
  * @link     https://github.com/huangdijia/laravel-redis-ide-helper
- * @document https://github.com/huangdijia/laravel-redis-ide-helper/blob/2.x/README.md
+ * @document https://github.com/huangdijia/laravel-redis-ide-helper/blob/3.x/README.md
  * @contact  huangdijia@gmail.com
  */
 namespace Huangdijia\RedisIdeHelper;
