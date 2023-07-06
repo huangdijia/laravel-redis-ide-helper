@@ -24,7 +24,7 @@ class GenerateCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'ide-helper:redis {filename=_ide_helper_redis.php : The path to the helper file}';
+    protected $signature = 'ide-helper:redis {filename=_ide_helper_redis.php : The path to the helper file} {--client= : The redis client}';
 
     /**
      * @var string
@@ -35,6 +35,7 @@ class GenerateCommand extends Command
     {
         try {
             $filename = $this->argument('filename');
+            $client = $this->option('client') ?: config('database.redis.client', 'phpredis');
 
             if (! $filename) {
                 $filename = '_ide_helper_redis.php';
@@ -54,7 +55,7 @@ class GenerateCommand extends Command
             $redisFacadePath = $classLoader->findFile('Illuminate\Support\Facades\Redis');
             $code = file_get_contents($redisFacadePath);
             $stmts = $parser->parse($code);
-            $traverser->addVisitor(new IdeHelperVisitor($parser));
+            $traverser->addVisitor(new IdeHelperVisitor($parser, $client));
             $stmts = $traverser->traverse($stmts);
             $code = $printer->prettyPrint($stmts);
 
