@@ -24,7 +24,7 @@ class GenerateCommand extends Command
     /**
      * @var string
      */
-    protected $signature = 'ide-helper:redis {filename=_ide_helper_redis.php : The path to the helper file} {--client= : The redis client}';
+    protected $signature = 'ide-helper:redis {filename=_ide_helper_redis.php : The path to the helper file} {--client= : The redis client, phpredis or predis.}';
 
     /**
      * @var string
