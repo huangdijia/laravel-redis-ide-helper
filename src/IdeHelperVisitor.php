@@ -39,7 +39,12 @@ class IdeHelperVisitor extends NodeVisitorAbstract
 
     protected function getPredisDocComment(): string
     {
+        if (! class_exists(\Predis\ClientInterface::class)) {
+            return '';
+        }
+        
         $rc = new ReflectionClass(\Predis\ClientInterface::class);
+        
         return $rc->getDocComment() ?: '';
     }
 }
