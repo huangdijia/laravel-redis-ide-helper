@@ -25,6 +25,9 @@
         "laravel/framework": "^9.0|^10.0",
         "huangdijia/php-coding-standard": "^1.1"
     },
+    "suggest": {
+        "predis/predis": "Required to use Predis ClientInterface DocComment."
+    },
     "autoload": {
         "files": [],
         "psr-4": {
@@ -40,6 +43,6 @@
     },
     "scripts": {
         "cs-fix": "php-cs-fixer fix $1",
-        "analyse": "phpstan analyse --memory-limit 300M -l 0 -c phpstan.neon ./src"
+        "analyse": "phpstan analyse --memory-limit 300M -l 0 -c phpstan.neon "
     }
 }

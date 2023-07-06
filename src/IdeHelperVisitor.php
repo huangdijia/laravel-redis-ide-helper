@@ -13,6 +13,7 @@ namespace Huangdijia\RedisIdeHelper;
 use PhpParser\Comment\Doc;
 use PhpParser\NodeVisitorAbstract;
 use PhpParser\Parser;
+use Redis;
 use ReflectionClass;
 
 class IdeHelperVisitor extends NodeVisitorAbstract
@@ -31,15 +32,23 @@ class IdeHelperVisitor extends NodeVisitorAbstract
     {
         /** @var PhpParser\Node\Stmt\Class_ */
         $class = &$nodes[0]->stmts[0];
-        $class->setDocComment(new Doc($this->getPredisDocComment()));
+        $class->setDocComment(new Doc($this->getRedisDocComment()));
         $class->stmts = [];
 
         return $nodes;
     }
 
-    protected function getPredisDocComment(): string
+    protected function getRedisDocComment(): string
     {
-        $rc = new ReflectionClass(\Predis\ClientInterface::class);
-        return $rc->getDocComment() ?: '';
+        if (class_exists(\Predis\ClientInterface::class)) {
+            $rc = new ReflectionClass(\Predis\ClientInterface::class);
+            return $rc->getDocComment() ?: '';
+        }
+
+        if (class_exists(Redis::class)) {
+            return "/**\n * @mixin \\Redis\n */";
+        }
+
+        return '';
     }
 }
