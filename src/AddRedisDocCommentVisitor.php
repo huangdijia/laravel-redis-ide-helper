@@ -17,7 +17,7 @@ use ReflectionClass;
 use ReflectionMethod;
 use ReflectionParameter;
 
-class IdeHelperVisitor extends NodeVisitorAbstract
+class AddRedisDocCommentVisitor extends NodeVisitorAbstract
 {
     public function __construct(protected Parser $parser, protected string $client = 'phpredis')
     {

@@ -11,12 +11,11 @@ declare(strict_types=1);
 namespace Huangdijia\RedisIdeHelper\Commands;
 
 use Composer\Autoload\ClassLoader;
-use Huangdijia\RedisIdeHelper\IdeHelperVisitor;
+use Huangdijia\RedisIdeHelper\AddRedisDocCommentVisitor;
 use Illuminate\Console\Command;
 use PhpParser\NodeTraverser;
-use PhpParser\ParserFactory;
+use PhpParser\Parser;
 use PhpParser\PrettyPrinter\Standard;
-use RuntimeException;
 use Throwable;
 
 class GenerateCommand extends Command
@@ -30,6 +29,15 @@ class GenerateCommand extends Command
      * @var string
      */
     protected $description = 'Generate autocompletion for redis.';
+
+    public function __construct(
+        protected ClassLoader $loader,
+        protected Parser $parser,
+        protected Standard $printer,
+        protected NodeTraverser $traverser,
+    ) {
+        parent::__construct();
+    }
 
     public function handle()
     {
@@ -47,21 +55,16 @@ class GenerateCommand extends Command
 
             $filename = $this->laravel->basePath($filename);
 
-            $parser = (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
-            $printer = new Standard();
-            $traverser = new NodeTraverser();
-            $classLoader = $this->findLoader();
-
-            $redisFacadePath = $classLoader->findFile('Illuminate\Support\Facades\Redis');
+            $redisFacadePath = $this->loader->findFile('Illuminate\Support\Facades\Redis');
             $code = file_get_contents($redisFacadePath);
-            $stmts = $parser->parse($code);
-            $traverser->addVisitor(new IdeHelperVisitor($parser, $client));
-            $stmts = $traverser->traverse($stmts);
-            $code = $printer->prettyPrint($stmts);
 
-            // TODO: Unknown reason
-            $code = "<?php\n" . $code;
-            $code = ltrim($code, '?>' . PHP_EOL);
+            $this->traverser->addVisitor(new AddRedisDocCommentVisitor($this->parser, $client));
+
+            $stmts = $this->parser->parse($code);
+            $stmts = $this->traverser->traverse($stmts);
+
+            $code = $this->printer->prettyPrint($stmts);
+            $code = "<?php\n" . ltrim($code, '?>' . PHP_EOL);
 
             $written = file_put_contents($filename, $code);
 
@@ -73,18 +76,5 @@ class GenerateCommand extends Command
         } catch (Throwable $e) {
             $this->warn($e->getMessage());
         }
-    }
-
-    private function findLoader(): ClassLoader
-    {
-        $loaders = spl_autoload_functions();
-
-        foreach ($loaders as $loader) {
-            if (is_array($loader) && $loader[0] instanceof ClassLoader) {
-                return $loader[0];
-            }
-        }
-
-        throw new RuntimeException('Composer loader not found.');
     }
 }

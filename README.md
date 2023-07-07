@@ -5,10 +5,9 @@
 [![Total Downloads](https://poser.pugx.org/huangdijia/laravel-redis-ide-helper/d/total.png)](https://packagist.org/packages/huangdijia/laravel-redis-ide-helper)
 [![GitHub license](https://img.shields.io/github/license/huangdijia/laravel-redis-ide-helper)](https://github.com/huangdijia/laravel-redis-ide-helper)
 
-
 ## Installation
 
-```bash
+```shell
 composer require huangdijia/laravel-redis-ide-helper --dev
 ```
 
@@ -24,6 +23,6 @@ protected $commands = [
 
 ## Usage
 
-```bash
+```shell
 php artisan ide-helper:redis
 ```

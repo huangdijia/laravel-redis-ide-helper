@@ -10,7 +10,12 @@ declare(strict_types=1);
  */
 namespace Huangdijia\RedisIdeHelper;
 
+use Composer\Autoload\ClassLoader;
+use Huangdijia\RedisIdeHelper\Commands\GenerateCommand;
 use Illuminate\Support\ServiceProvider;
+use PhpParser\Parser;
+use PhpParser\ParserFactory;
+use RuntimeException;
 
 class RedisIdeHelperServiceProvider extends ServiceProvider
 {
@@ -21,6 +26,26 @@ class RedisIdeHelperServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerCommands();
+
+        $this->app->when(GenerateCommand::class)
+            ->needs(ClassLoader::class)
+            ->give(function () {
+                $loaders = spl_autoload_functions();
+
+                foreach ($loaders as $loader) {
+                    if (is_array($loader) && $loader[0] instanceof ClassLoader) {
+                        return $loader[0];
+                    }
+                }
+
+                throw new RuntimeException('Composer loader not found.');
+            });
+
+        $this->app->when(GenerateCommand::class)
+            ->needs(Parser::class)
+            ->give(function () {
+                return (new ParserFactory())->create(ParserFactory::ONLY_PHP7);
+            });
     }
 
     protected function registerCommands(): void
