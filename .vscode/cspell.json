@@ -10,7 +10,9 @@
         "hyperspeed",
         "Laravel",
         "Macroable",
-        "Migrateable"
+        "Migrateable",
+        "phpredis",
+        "predis"
     ],
     "flagWords": [
         "hte"
