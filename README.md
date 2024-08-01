@@ -1,8 +1,8 @@
 # laravel-redis-ide-helper
 
 [![Latest Test](https://github.com/huangdijia/laravel-redis-ide-helper/workflows/tests/badge.svg)](https://github.com/huangdijia/laravel-redis-ide-helper/actions)
-[![Latest Stable Version](https://poser.pugx.org/huangdijia/laravel-redis-ide-helper/version.png)](https://packagist.org/packages/huangdijia/laravel-redis-ide-helper)
-[![Total Downloads](https://poser.pugx.org/huangdijia/laravel-redis-ide-helper/d/total.png)](https://packagist.org/packages/huangdijia/laravel-redis-ide-helper)
+[![Latest Stable Version](https://img.shields.io/packagist/v/huangdijia/laravel-redis-ide-helper)](https://packagist.org/packages/huangdijia/laravel-redis-ide-helper)
+[![Total Downloads](https://img.shields.io/packagist/dt/huangdijia/laravel-redis-ide-helper)](https://packagist.org/packages/huangdijia/laravel-redis-ide-helper)
 [![GitHub license](https://img.shields.io/github/license/huangdijia/laravel-redis-ide-helper)](https://github.com/huangdijia/laravel-redis-ide-helper)
 
 ## Installation
