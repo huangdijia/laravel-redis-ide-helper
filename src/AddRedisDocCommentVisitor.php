@@ -8,6 +8,7 @@ declare(strict_types=1);
  * @document https://github.com/huangdijia/laravel-redis-ide-helper/blob/3.x/README.md
  * @contact  huangdijia@gmail.com
  */
+
 namespace Huangdijia\RedisIdeHelper;
 
 use PhpParser\Comment\Doc;
